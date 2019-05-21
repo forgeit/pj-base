@@ -10,6 +10,7 @@
 		'app.home',
 		'app.grupo',
 		'app.cliente',
+		'app.produto',
 		'angularFileUpload']);
 
 })();

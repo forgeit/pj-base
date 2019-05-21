@@ -69,3 +69,9 @@ $route['grupo/(:num)'] = 'grupo/buscar/$1';
 $route['grupo/salvar'] = 'grupo/salvar';
 $route['grupo/atualizar/(:num)'] = 'grupo/atualizar/$1';
 $route['grupo/excluir/(:num)'] = 'grupo/excluir/$1';
+
+$route['produto'] = 'produto/buscarTodos';
+$route['produto/(:num)'] = 'produto/buscar/$1';
+$route['produto/salvar'] = 'produto/salvar';
+$route['produto/atualizar/(:num)'] = 'produto/atualizar/$1';
+$route['produto/excluir/(:num)'] = 'produto/excluir/$1';
