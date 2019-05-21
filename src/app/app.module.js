@@ -7,6 +7,8 @@
 		'app.layout',
 		'app.login',
 		'app.usuario',
+		'app.home',
+		'app.cliente',
 		'angularFileUpload']);
 
 })();

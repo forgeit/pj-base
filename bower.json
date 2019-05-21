@@ -1,0 +1,17 @@
+{
+  "name": "dagyane",
+  "homepage": "https://github.com/kelvinpalves/pj-dagy",
+  "authors": [
+    "kalves <kalves@kopp.com.br>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

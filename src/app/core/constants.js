@@ -4,10 +4,8 @@
 	var core = angular.module('app.core');
 
 	var configuracaoREST = {
-		demanda: 'demanda/',
-		pessoa: 'pessoa/',
-		tipoDemanda: 'tipo-demanda/',
-		url: 'http://localhost/mathias/server/'
+		cliente: 'cliente/',
+		url: 'http://localhost/dagyane/server/'
 		// url: 'http://sistema.mathiasbertram.com.br/server/'
 	};
 
