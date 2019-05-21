@@ -8,6 +8,7 @@
 		'app.login',
 		'app.usuario',
 		'app.home',
+		'app.grupo',
 		'app.cliente',
 		'angularFileUpload']);
 

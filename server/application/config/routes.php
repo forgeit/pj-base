@@ -58,6 +58,14 @@ $route['usuario/alterar-senha/(:num)'] = 'usuario/alterarSenha/$1';
 $route['cliente/(:num)'] = 'cliente/buscar/$1';
 $route['cliente'] = 'cliente/buscarTodos';
 $route['ver-arquivo/demanda/(:num)/arquivo/(:num)'] = 'verArquivo/porDemanda/$1/$2';//Apenas para exemplo.
+
 $route['cliente/salvar'] = 'cliente/salvar';
 $route['cliente/atualizar/(:num)'] = 'cliente/atualizar/$1';
 $route['cliente/excluir/(:num)'] = 'cliente/excluir/$1';
+
+
+$route['grupo'] = 'grupo/buscarTodos';
+$route['grupo/(:num)'] = 'grupo/buscar/$1';
+$route['grupo/salvar'] = 'grupo/salvar';
+$route['grupo/atualizar/(:num)'] = 'grupo/atualizar/$1';
+$route['grupo/excluir/(:num)'] = 'grupo/excluir/$1';

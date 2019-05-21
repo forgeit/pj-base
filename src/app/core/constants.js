@@ -5,6 +5,7 @@
 
 	var configuracaoREST = {
 		cliente: 'cliente/',
+		grupo: 'grupo/',
 		url: 'http://localhost/dagyane/server/'
 		// url: 'http://sistema.mathiasbertram.com.br/server/'
 	};
