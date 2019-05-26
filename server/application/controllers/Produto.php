@@ -10,20 +10,74 @@ class Produto extends MY_Controller {
 		$produtoModel = array();
 		$produtoModel['id_produto'] = $this->uri->segment(3);
 
-		if (isset($produto->descricao)) {
-			if (!trim($produto->descricao)) {
-				print_r(json_encode($this->gerarRetorno(FALSE, "O campo descrição é obrigatório.")));
+		if (isset($produto->codigo)) {
+			if (!trim($produto->codigo)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo código é obrigatório.")));
 				die();
 			} else {
-				$produtoModel['descricao'] = mb_strtoupper($produto->descricao);
-				if ($this->ProdutoModel->buscarPorDescricaoId($produtoModel['descricao'], $produtoModel['id_produto'])) {
-					print_r(json_encode($this->gerarRetorno(FALSE, "o produto informado já está registrado.")));
+				$produtoModel['codigo'] = $produto->codigo;
+
+				if ($this->ProdutoModel->buscarPorCodigoId($produtoModel['codigo'], $produtoModel['id_produto'])) {
+					print_r(json_encode($this->gerarRetorno(FALSE, "O código informado para o produto já está registrado.")));
 					die();
 				}
 			}
 		} else {
-			print_r(json_encode($this->gerarRetorno(FALSE, "O campo descrição é obrigatório.")));
+			print_r(json_encode($this->gerarRetorno(FALSE, "O campo código é obrigatório.")));
 			die();
+		}
+
+		if (isset($produto->nome)) {
+			if (!trim($produto->nome)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo nome é obrigatório.")));
+				die();
+			} else {
+				$produtoModel['nome'] = $produto->nome;
+
+				if ($this->ProdutoModel->buscarPorNomeId($produtoModel['nome'], $produtoModel['id_produto'])) {
+					print_r(json_encode($this->gerarRetorno(FALSE, "O nome informado para o produto já está registrado.")));
+					die();
+				}
+			}
+		} else {
+			print_r(json_encode($this->gerarRetorno(FALSE, "O campo nome é obrigatório.")));
+			die();
+		}
+
+		if (isset($produto->custo)) {		
+			if ($produto->custo) {
+				$produtoModel['custo'] = $produto->custo;
+			}
+		}
+
+		if (isset($produto->valor)) {
+			if (!trim($produto->valor)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo valor é obrigatório.")));
+				die();
+			} else {
+				$produtoModel['valor'] = $produto->valor;
+			}
+		} else {
+			print_r(json_encode($this->gerarRetorno(FALSE, "O campo valor é obrigatório.")));
+			die();
+		}
+
+		if (isset($produto->quantidade)) {		
+			if ($produto->quantidade) {
+				$produtoModel['quantidade'] = $produto->quantidade;
+			}
+		}
+
+		if (isset($produto->id_grupo)) {		
+			if ($produto->id_grupo) {
+				$produtoModel['id_grupo'] = $produto->id_grupo;
+			}
+		}
+
+		if (isset($produto->observacao)) {		
+			if ($produto->observacao) {
+				$produtoModel['observacao'] = $produto->observacao;
+			}
 		}
 
 		$response = array('exec' => $this->ProdutoModel->atualizar($produtoModel['id_produto'], $produtoModel, 'id_produto'));
@@ -56,6 +110,17 @@ class Produto extends MY_Controller {
 		$lista = $this->ProdutoModel->buscarTodosNativo();
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
+
+	public function buscarCodigo() {
+		$lista = $this->ProdutoModel->buscarCodigo();
+
+		$objeto = $lista[0];
+
+		$objeto['id']  = ($objeto['id'] == null) ? 1 : $objeto['id'] + 1;
+		$objeto['id'] = str_pad($objeto['id'], 5, "0", STR_PAD_LEFT);
+
+		print_r(json_encode(array('data' => $objeto ? $objeto : array())));
+	}
 	
 	private function gerarRetorno($response, $mensagem) {
 		$message = array();
@@ -74,21 +139,74 @@ class Produto extends MY_Controller {
 		$produto = json_decode($data);
 		$produtoModel = array();
 
-		if (isset($produto->descricao)) {
-			if (!trim($produto->descricao)) {
-				print_r(json_encode($this->gerarRetorno(FALSE, "O campo descrição é obrigatório.")));
+		if (isset($produto->codigo)) {
+			if (!trim($produto->codigo)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo código é obrigatório.")));
 				die();
 			} else {
-				$produtoModel['descricao'] = mb_strtoupper($produto->descricao);
+				$produtoModel['codigo'] = $produto->codigo;
 
-				if ($this->ProdutoModel->buscarPorDescricao($produtoModel['descricao'])) {
-					print_r(json_encode($this->gerarRetorno(FALSE, "O produto informado já está registrado.")));
+				if ($this->ProdutoModel->buscarPorCodigo($produtoModel['codigo'])) {
+					print_r(json_encode($this->gerarRetorno(FALSE, "O código informado para o produto já está registrado.")));
 					die();
 				}
 			}
 		} else {
-			print_r(json_encode($this->gerarRetorno(FALSE, "O campo descrição é obrigatório.")));
+			print_r(json_encode($this->gerarRetorno(FALSE, "O campo código é obrigatório.")));
 			die();
+		}
+
+		if (isset($produto->nome)) {
+			if (!trim($produto->nome)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo nome é obrigatório.")));
+				die();
+			} else {
+				$produtoModel['nome'] = $produto->nome;
+
+				if ($this->ProdutoModel->buscarPorNome($produtoModel['nome'])) {
+					print_r(json_encode($this->gerarRetorno(FALSE, "O nome informado para o produto já está registrado.")));
+					die();
+				}
+			}
+		} else {
+			print_r(json_encode($this->gerarRetorno(FALSE, "O campo nome é obrigatório.")));
+			die();
+		}
+
+		if (isset($produto->custo)) {		
+			if ($produto->custo) {
+				$produtoModel['custo'] = $produto->custo;
+			}
+		}
+
+		if (isset($produto->valor)) {
+			if (!trim($produto->valor)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo valor é obrigatório.")));
+				die();
+			} else {
+				$produtoModel['valor'] = $produto->valor;
+			}
+		} else {
+			print_r(json_encode($this->gerarRetorno(FALSE, "O campo valor é obrigatório.")));
+			die();
+		}
+
+		if (isset($produto->quantidade)) {		
+			if ($produto->quantidade) {
+				$produtoModel['quantidade'] = $produto->quantidade;
+			}
+		}
+
+		if (isset($produto->id_grupo)) {		
+			if ($produto->id_grupo) {
+				$produtoModel['id_grupo'] = $produto->id_grupo;
+			}
+		}
+
+		if (isset($produto->observacao)) {		
+			if ($produto->observacao) {
+				$produtoModel['observacao'] = $produto->observacao;
+			}
 		}
 		
 		$response = array('exec' => $this->ProdutoModel->inserir($produtoModel));

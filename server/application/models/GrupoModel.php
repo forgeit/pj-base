@@ -46,4 +46,19 @@ class GrupoModel extends MY_Model {
         }
 	}
 
+	function buscarCombo() {
+		$sql = "SELECT 
+				id_grupo as id,
+                descricao
+				FROM grupo 
+				ORDER BY descricao";
+
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+	}
+
 }

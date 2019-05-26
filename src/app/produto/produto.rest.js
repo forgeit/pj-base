@@ -11,6 +11,7 @@
 		var service = {
 			atualizar: atualizar,
 			buscar: buscar,
+			buscarCodigo: buscarCodigo,
 			buscarTodos: buscarTodos,
 			salvar: salvar,
 			remover: remover
@@ -24,6 +25,10 @@
 
 		function buscar(data) {	
 			return $http.get(configuracaoREST.url + configuracaoREST.produto + data);
+		}
+
+		function buscarCodigo() {	
+			return $http.get(configuracaoREST.url + configuracaoREST.produto + 'buscarCodigo');
 		}
 
 		function buscarTodos(data) {

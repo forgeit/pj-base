@@ -6,9 +6,9 @@
 		.module('app.produto')
 		.controller('Produto', Produto);
 
-	Produto.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'produtoRest'];
+	Produto.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'produtoRest', 'grupoRest'];
 
-	function Produto(controllerUtils, AuthToken, $rootScope, jwtHelper, dataservice) {
+	function Produto(controllerUtils, AuthToken, $rootScope, jwtHelper, dataservice, grupoRest) {
 		var vm = this;
 
 		vm.atualizar = atualizar;
@@ -16,6 +16,7 @@
 		vm.editar = false;
 		vm.salvar = salvar;
 		vm.voltar = voltar;
+		vm.grupoLista = [];
 
 		iniciar();
 
@@ -47,26 +48,66 @@
 			}
 		}
 
+		function buscarComboGrupo() {
+			return grupoRest.buscarCombo().then(success).catch(error);
+
+			function error(response) {
+				return controllerUtils.promise.criar(false, {});
+			}
+
+			function success(response) {
+				return controllerUtils.promise.criar(true, response.data.data);
+			}
+		}
+
+		function buscarCodigo() {
+			return dataservice.buscarCodigo().then(success).catch(error);
+
+			function error(response) {
+				return controllerUtils.promise.criar(false, {});
+			}
+
+			function success(response) {
+				return controllerUtils.promise.criar(true, response.data.data.id);
+			}
+		}
+
 		function editarObjeto() {
 			vm.editar = !angular.equals({}, controllerUtils.$routeParams);
 			return !angular.equals({}, controllerUtils.$routeParams);
 		}
 
-		function inicializarObjetos(values) {			
+		function inicializarObjetos(values) {
+			if (values[0].exec) {
+				vm.grupoLista = values[0].objeto;
+			} else {
+				controllerUtils.feed(controllerUtils.messageType.ERROR, 'Ocorreu um erro ao carregar a lista de grupos.');
+			}
+
 			if (editarObjeto()) {
-				if (values[0].exec) {
-					vm.produto = values[0].objeto;
+				if (values[1].exec) {
+					vm.produto = values[1].objeto;
 				} else {
 					controllerUtils.feed(controllerUtils.messageType.ERROR, 'Não foi possível carregar os dados do produto.');
+				}
+			} else {
+				if (values[1].exec) {
+					vm.produto.codigo = values[1].objeto;
+				} else {
+					controllerUtils.feed(controllerUtils.messageType.ERROR, 'Ocorreu um erro ao carregar o último código.');
 				}
 			}
 		}
 
 		function iniciar() {
 			var promises = [];
+
+			promises.push(buscarComboGrupo());
 			
 			if (editarObjeto()) {
 				promises.push(carregarProduto(controllerUtils.$routeParams.id));
+			} else {
+				promises.push(buscarCodigo());
 			}
 
 			return controllerUtils.ready(promises).then(function (values) {
@@ -86,7 +127,6 @@
 			}
 
 			function success(response) {
-				console.log(response);
 				controllerUtils.feedMessage(response);
 
 				if (response.data.status == 'true') {

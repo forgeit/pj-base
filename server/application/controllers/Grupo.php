@@ -56,6 +56,11 @@ class Grupo extends MY_Controller {
 		$lista = $this->GrupoModel->buscarTodosNativo();
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
+
+	public function buscarCombo() {
+		$lista = $this->GrupoModel->buscarCombo();
+		print_r(json_encode(array('data' => $lista ? $lista : array())));
+	}
 	
 	private function gerarRetorno($response, $mensagem) {
 		$message = array();

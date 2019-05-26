@@ -11,6 +11,7 @@
 		var service = {
 			atualizar: atualizar,
 			buscar: buscar,
+			buscarCombo: buscarCombo,
 			buscarTodos: buscarTodos,
 			salvar: salvar,
 			remover: remover
@@ -24,6 +25,10 @@
 
 		function buscar(data) {	
 			return $http.get(configuracaoREST.url + configuracaoREST.grupo + data);
+		}
+
+		function buscarCombo() {
+			return $http.get(configuracaoREST.url + configuracaoREST.grupo + 'combo');
 		}
 
 		function buscarTodos(data) {

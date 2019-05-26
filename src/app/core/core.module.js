@@ -10,6 +10,7 @@
 		'datatables.bootstrap', 
 		'core.utils', 
 		'angular-loading-bar',
+		'ui.utils.masks',
 		'ngStorage',
 		'angular-jwt',
 		'core.auth']);

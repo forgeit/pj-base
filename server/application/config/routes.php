@@ -65,6 +65,7 @@ $route['cliente/excluir/(:num)'] = 'cliente/excluir/$1';
 
 
 $route['grupo'] = 'grupo/buscarTodos';
+$route['grupo/combo'] = 'grupo/buscarCombo';
 $route['grupo/(:num)'] = 'grupo/buscar/$1';
 $route['grupo/salvar'] = 'grupo/salvar';
 $route['grupo/atualizar/(:num)'] = 'grupo/atualizar/$1';
