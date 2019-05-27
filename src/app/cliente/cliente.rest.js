@@ -12,6 +12,7 @@
 			atualizar: atualizar,
 			buscar: buscar,
 			buscarTodos: buscarTodos,
+			buscarTodosClientes: buscarTodosClientes,
 			salvar: salvar,
 			remover: remover
 		};
@@ -28,6 +29,10 @@
 
 		function buscarTodos(data) {
 			return $http.get(configuracaoREST.url + configuracaoREST.cliente);
+		}
+
+		function buscarTodosClientes(data) {
+			return $http.get(configuracaoREST.url + configuracaoREST.cliente + 'buscarTodosClientes');
 		}
 
 		function salvar(data) {

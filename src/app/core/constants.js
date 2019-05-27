@@ -7,6 +7,7 @@
 		cliente: 'cliente/',
 		grupo: 'grupo/',
 		produto: 'produto/',
+		venda: 'venda/',
 		url: 'http://localhost/dagyane/server/'
 		// url: 'http://sistema.mathiasbertram.com.br/server/'
 	};

@@ -84,6 +84,11 @@ class Cliente extends MY_Controller {
 		$lista = $this->ClienteModel->buscarTodosNativo();
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
+
+	public function buscarTodosClientes() {
+		$lista = $this->ClienteModel->buscarTodosClientes();
+		print_r(json_encode(array('data' => array ('clientes' => $lista ? $lista : array()))));
+	}
 	
 	private function gerarRetorno($response, $mensagem) {
 		$message = array();

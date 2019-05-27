@@ -49,4 +49,20 @@ class ClienteModel extends MY_Model {
         }
 	}
 
+	function buscarTodosClientes() {
+		$sql = "SELECT 
+				c.id_cliente,
+                c.nome,
+                c.telefone
+				FROM cliente c 
+				ORDER BY c.nome";
+
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+	}
+
 }

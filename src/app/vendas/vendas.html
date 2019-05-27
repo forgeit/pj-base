@@ -62,7 +62,7 @@
 					</div>
 				</div>
 				<div class="box-footer" ng-show="vm.carrinho.length > 0">
-					<button type="submit" class="btn btn-primary btn-flat" ng-disabled="formulario.$invalid" data-toggle="modal" data-target="#modalPagamento">Finalizar Venda</button>
+					<button type="submit" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalPagamento">Finalizar Venda</button>
 				</div>
 			</form>
 		</div>
@@ -70,6 +70,7 @@
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modalPagamento">
+	<form name="formulario" novalidate>
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -83,7 +84,6 @@
 						<div class="form-group" ng-class="formulario.parcelamento.$dirty && formulario.parcelamento.$invalid ? 'has-error' : ''">
 							<label for="parcelamento">Parcelamento: *</label>
 							<select class="form-control" id="parcelamento" name="parcelamento" ng-options="parcelamento.id as parcelamento.descricao for parcelamento in vm.parcelas" ng-model="vm.venda.parcelamento" required>
-								<option value="" >Á vista</option>
 							</select>
 							<span class="help-block" ng-show="formulario.descricao.$dirty && formulario.descricao.$invalid">O campo é obrigatório</span>
 						</div>
@@ -94,7 +94,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label for="descricao">Cliente: * </label>
-							<input type="text" ng-model="vm.produtoSelecionado" placeholder="Informe o nome do produto" uib-typeahead="produto as produto.codigo + ' - ' + produto.nome for produto in vm.listaProdutos | filter:{ nome: $viewValue} | limitTo:8" class="form-control">
+							<input name="cliente" type="text" ng-model="vm.venda.cliente" placeholder="Informe o nome do cliente" uib-typeahead="cliente as cliente.telefone + ' - ' + cliente.nome for cliente in vm.listaClientes | filter:{ nome: $viewValue} | limitTo:8" class="form-control" required>
 						</div>
 					</div>
 				</div>
@@ -103,7 +103,7 @@
 					<div class="col-md-12">
 						<div class="form-group" ng-class="formulario.valorEntrada.$dirty && formulario.valorEntrada.$invalid ? 'has-error' : ''">
 							<label for="valorEntrada">Valor de Entrada:</label>
-		                    <input id="valorEntrada" name="valorEntrada" type="text" placeholder="Informe o valor de entrada" class="form-control" ng-model="vm.venda.valorEntrada"  ui-money-mask ng-init="vm.venda.valorEntrada = 0">
+		                    <input id="valorEntrada" name="valorEntrada" type="text" placeholder="Informe o valor de entrada" class="form-control" ng-model="vm.venda.valorEntrada"  ui-money-mask ng-init="vm.venda.valorEntrada = 0" required>
 							<span class="help-block" ng-show="formulario.descricao.$dirty && formulario.descricao.$invalid">O campo é obrigatório</span>
 						</div>
 					</div>
@@ -111,9 +111,9 @@
 
 				<div class="row" ng-if="vm.venda.parcelamento > 1" style="margin-top: 10px;">
 					<div class="col-md-12">
-						<div class="form-group" ng-class="formulario.parcelamento.$dirty && formulario.parcelamento.$invalid ? 'has-error' : ''">
+						<div class="form-group" ng-class="formulario.parcelamento.$dirty && formulario.parcelamento.$invalid ? 'has-error' : ''" >
 							<label for="parcelamento">Data do Primeiro Pagamento: *</label>
-		                    <input id="dataParcelamento" type="text" placeholder="Informe a data do primeiro pagamento" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.venda.dataPagamento" is-open="focus"  ng-focus="focus=true" >
+		                    <input id="dataParcelamento" name="dataParcelamento" type="text" placeholder="Informe a data do primeiro pagamento" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.venda.dataPagamento" is-open="focus"  ng-focus="focus=true" required>
 							<span class="help-block" ng-show="formulario.descricao.$dirty && formulario.descricao.$invalid">O campo é obrigatório</span>
 						</div>
 					</div>
@@ -132,7 +132,7 @@
 								<tr>
 									<td style="width: 30%">{{ vm.valorTotalCarrinho | currency }}</td>
 									<td style="width: 70%">
-										{{ vm.venda.parcelamento ? 'Compra parcelada em ' + vm.venda.parcelamento + ' vezes de ' + (((vm.valorTotalCarrinho - (vm.venda.valorEntrada ? vm.venda.valorEntrada : 0))  / vm.venda.parcelamento ) | currency ) : 'À Vista.' }}
+										{{ vm.venda.parcelamento > 1 ? 'Compra parcelada em ' + vm.venda.parcelamento + ' vezes de ' + (((vm.valorTotalCarrinho - (vm.venda.valorEntrada ? vm.venda.valorEntrada : 0))  / vm.venda.parcelamento ) | currency ) : 'À Vista.' }}
 									</td>
 								</tr>
 							</tbody>
@@ -141,8 +141,9 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary btn-flat">Finalizar</button>
+				<button type="button" class="btn btn-primary btn-flat" ng-click="vm.finalizarVenda()">Finalizar</button>
 			</div>
 		</div>
 	</div>
+	</form>
 </div>

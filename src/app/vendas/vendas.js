@@ -6,9 +6,9 @@
 		.module('app.vendas')
 		.controller('Vendas', Vendas);
 
-	Vendas.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'vendasRest', 'produtoRest'];
+	Vendas.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'vendasRest', 'produtoRest', 'clienteRest'];
 
-	function Vendas(controllerUtils, AuthToken, $rootScope, jwtHelper, dataservice, produtoRest) {
+	function Vendas(controllerUtils, AuthToken, $rootScope, jwtHelper, dataservice, produtoRest, clienteRest) {
 		var vm = this;
 
 		vm.listaProdutos = [];
@@ -16,8 +16,13 @@
 		vm.adicionarProdutoNoCarrinho = adicionarProdutoNoCarrinho;
 		vm.aumentarQuantidade = aumentarQuantidade;
 		vm.reduzirQuantidade = reduzirQuantidade;
+		vm.finalizarVenda = finalizarVenda;
+
+		var dataAuxiliar = new Date();
+		dataAuxiliar.setMonth(dataAuxiliar.getMonth() + 1);
 
 		vm.parcelas = [
+			{ id: 1, descricao: 'À Vista.'},
 			{ id: 2, descricao: 'Parcelar compra em 2 vezes.'},
 			{ id: 3, descricao: 'Parcelar compra em 3 vezes.'},
 			{ id: 4, descricao: 'Parcelar compra em 4 vezes.'},
@@ -29,6 +34,8 @@
 			{ id: 10, descricao: 'Parcelar compra em 10 vezes'}
 		];
 
+		vm.venda = { dataPagamento: dataAuxiliar, parcelamento: 1 };
+
 		vm.carrinho = [
 			{id_produto: 10, codigo: "002", nome: "TESTE", quantidade: 10, valor: 10, valorTotalProduto: 100},
 			{id_produto: 10, codigo: "002", nome: "TESTE 02", quantidade: 10, valor: 10, valorTotalProduto: 100}
@@ -37,6 +44,22 @@
 		vm.valorTotalCarrinho = 200;
 
 		iniciar();
+
+		function finalizarVenda() {
+			dataservice.salvar({ venda: vm.venda, carrinho: vm.carrinho}).then(success).catch(error);
+
+			function error(response) {
+				controllerUtils.feed(controllerUtils.messageType.ERROR, 'Ocorreu um erro ao registrar a venda.');
+			}
+
+			function success(response) {
+				controllerUtils.feedMessage(response);
+
+				if (response.data.status == 'true') {
+					voltar();
+				}
+			}
+		}
 
 		function aumentarQuantidade(produto) {
 			produto.quantidade++;
@@ -108,6 +131,7 @@
 		
 		function iniciar() {
 			buscarTodosProdutos();
+			buscarTodosClientes();
 		}
 
 		function buscarTodosProdutos() {
@@ -121,6 +145,20 @@
 
 			function success(response) {
 				vm.listaProdutos = response.data.data.produtos;
+			}
+		}
+
+		function buscarTodosClientes() {
+			vm.listaClientes = [];
+
+			clienteRest.buscarTodosClientes().then(success).catch(error);
+
+			function error(response) {
+				controllerUtils.feed(controllerUtils.messageType.ERROR, 'Ocorreu um erro ao carregar os clientes.');
+			}
+
+			function success(response) {
+				vm.listaClientes = response.data.data.clientes;
 			}
 		}
 

@@ -14,7 +14,7 @@
 
 						<div class="col-md-4">
 							<div class="form-group" ng-class="formulario.telefone.$dirty && formulario.telefone.$invalid ? 'has-error' : ''">
-								<label for="telefone">Celular:</label>
+								<label for="telefone">Celular: *</label>
 								<input id="telefone" type="text" name="telefone" class="form-control" ng-model="vm.cliente.telefone" ui-mask="(99) 9999-9999?9" required>
 								<span class="help-block" ng-show="formulario.telefone.$dirty && formulario.telefone.$invalid">O campo é obrigatório / Inválido.</span>
 							</div>
