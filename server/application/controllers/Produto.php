@@ -111,6 +111,11 @@ class Produto extends MY_Controller {
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
 
+	public function buscarTodosProdutos() {
+		$lista = $this->ProdutoModel->buscarTodosProdutos();
+		print_r(json_encode(array('data' => array ('produtos' => $lista ? $lista : array()))));
+	}
+
 	public function buscarCodigo() {
 		$lista = $this->ProdutoModel->buscarCodigo();
 

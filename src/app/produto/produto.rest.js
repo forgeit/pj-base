@@ -13,6 +13,7 @@
 			buscar: buscar,
 			buscarCodigo: buscarCodigo,
 			buscarTodos: buscarTodos,
+			buscarTodosProdutos: buscarTodosProdutos,
 			salvar: salvar,
 			remover: remover
 		};
@@ -33,6 +34,10 @@
 
 		function buscarTodos(data) {
 			return $http.get(configuracaoREST.url + configuracaoREST.produto);
+		}
+
+		function buscarTodosProdutos(data) {
+			return $http.get(configuracaoREST.url + configuracaoREST.produto + 'buscarTodosProdutos');
 		}
 
 		function salvar(data) {

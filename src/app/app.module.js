@@ -7,8 +7,9 @@
 		'app.layout',
 		'app.login',
 		'app.usuario',
-		'app.home',
 		'app.grupo',
+		'app.home',
+		'app.vendas',
 		'app.cliente',
 		'app.produto',
 		'angularFileUpload']);

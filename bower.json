@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-input-masks": "^2.6.0"
+    "angular-input-masks": "^2.6.0",
+    "angular-bootstrap": "^2.5.0"
   }
 }

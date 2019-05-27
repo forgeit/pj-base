@@ -90,6 +90,23 @@ class ProdutoModel extends MY_Model {
         }
 	}
 
+	function buscarTodosProdutos() {
+		$sql = "select
+				p.id_produto,
+				p.codigo,
+				p.nome,
+				p.valor
+				from produto p
+				order by p.codigo";
+
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+	}
+
 	function buscarCodigo() {
 		$sql = "SELECT 
 				max(id_produto) as id
