@@ -79,32 +79,148 @@ class Venda extends MY_Controller {
 		$objetoEntrada = json_decode($data);
 		$vendaModel = array();
 
-		print_r($objetoEntrada);
+		$objetoEntradaVenda = $objetoEntrada->venda;
+
+		if (isset($objetoEntradaVenda->parcelamento)) {
+			if (!trim($objetoEntradaVenda->parcelamento)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo número de parcelas é obrigatório.")));
+				die();
+			}
+		} else {
+			print_r(json_encode($this->gerarRetorno(FALSE, "O campo número de parcelas é obrigatório.")));
+			die();
+		}
+
+		if (isset($objetoEntrada->valor_total)) {
+			if (!trim($objetoEntrada->valor_total)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O valor total é obrigatório.")));
+				die();
+			}
+		} else {
+			print_r(json_encode($this->gerarRetorno(FALSE, "O valor total é obrigatório.")));
+			die();
+		}
 
 
+		$compraParcelada = $objetoEntradaVenda->parcelamento > 1;
 
+		if ($compraParcelada) {
+			if (!isset($objetoEntradaVenda->cliente)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo cliente é obrigatório.")));
+				die();
+			}
 
+			if (isset($objetoEntradaVenda->cliente->id_cliente)) {
+				if (!trim($objetoEntradaVenda->cliente->id_cliente)) {
+					print_r(json_encode($this->gerarRetorno(FALSE, "O campo cliente é obrigatório.")));
+					die();
+				}
+			} else {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo cliente é obrigatório.")));
+				die();
+			}
 
-		// if (isset($grupo->descricao)) {
-		// 	if (!trim($grupo->descricao)) {
-		// 		print_r(json_encode($this->gerarRetorno(FALSE, "O campo descrição é obrigatório.")));
-		// 		die();
-		// 	} else {
-		// 		$grupoModel['descricao'] = mb_strtoupper($grupo->descricao);
+			if (!isset($objetoEntradaVenda->valorEntrada)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo valor entrada é obrigatório.")));
+				die();
+			}
+		}
 
-		// 		if ($this->GrupoModel->buscarPorDescricao($grupoModel['descricao'])) {
-		// 			print_r(json_encode($this->gerarRetorno(FALSE, "O grupo informado já está registrado.")));
-		// 			die();
-		// 		}
-		// 	}
-		// } else {
-		// 	print_r(json_encode($this->gerarRetorno(FALSE, "O campo descrição é obrigatório.")));
-		// 	die();
-		// }
-		
-		// $response = array('exec' => $this->GrupoModel->inserir($grupoModel));
-		// $array = $this->gerarRetorno($response, $response ? "Sucesso ao salvar o registro." : "Erro ao salvar o registro.");
-		// print_r(json_encode($array));
+		$vendaModel['data_hora'] = date('Y-m-d H:i:s');
+		$vendaModel['forma_pagamento'] = $objetoEntradaVenda->parcelamento;
+		$vendaModel['valor_total'] = $objetoEntrada->valor_total;
+
+		if ($compraParcelada) {
+			$vendaModel['id_cliente'] = $objetoEntradaVenda->cliente->id_cliente;
+			$vendaModel['valor_entrada'] = $objetoEntradaVenda->valorEntrada;
+		}
+
+		if (isset($objetoEntrada->carrinho)) {
+			$carrinho = $objetoEntrada->carrinho;
+
+			if (count($carrinho) <= 0) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "Erro ao detectar os produtos.")));
+				die();
+			}
+
+		} else {
+			print_r(json_encode($this->gerarRetorno(FALSE, "Erro ao detectar os produtos.")));
+			die();
+		}
+
+		$produtoLista = array();
+
+		foreach ($carrinho as $value) {
+			$produto = array();
+
+			if (isset($value->id_produto)) {
+				if (!trim($value->id_produto)) {
+					print_r(json_encode($this->gerarRetorno(FALSE, "O código do produto não foi detectado.")));
+					die();
+				} else {
+					$produto['id_produto'] = $value->id_produto;
+				}
+			} else {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O código do produto não foi detectado.")));
+				die();
+			}
+
+			if (isset($value->valor)) {
+				if (!trim($value->valor)) {
+					print_r(json_encode($this->gerarRetorno(FALSE, "O valor do produto não foi detectado.")));
+					die();
+				} else {
+					$produto['valor'] = $value->valor;
+				}
+			} else {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O valor do produto não foi detectado.")));
+				die();
+			}
+
+			if (isset($value->quantidade)) {
+				if (!trim($value->quantidade)) {
+					print_r(json_encode($this->gerarRetorno(FALSE, "O quantidade do produto não foi detectado.")));
+					die();
+				} else {
+					$produto['quantidade'] = $value->quantidade;
+				}
+			} else {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O valor do produto não foi detectado.")));
+				die();
+			}
+
+			$produtoLista[] = $produto;
+		}
+
+		$this->db->trans_begin();
+
+		$idVenda = $this->VendaModel->inserirRetornaId($vendaModel);
+
+		foreach ($produtoLista as $key => $value) {
+			$produtoLista[$key]['id_venda'] = $idVenda;
+			$this->VendaProdutoModel->inserir($produtoLista[$key]);
+		}
+
+		if ($compraParcelada) {
+			$valorParcela = ($vendaModel['valor_total'] - $vendaModel['valor_entrada']) / $vendaModel['forma_pagamento'];
+
+			$dataPagamento = $objetoEntradaVenda->dataPagamento;
+
+			for ($i = 0; $i < $vendaModel['forma_pagamento']; $i++) {
+
+			}
+
+			print_r($valorParcela);
+
+		}
+
+		if ($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			print_r(json_encode($this->gerarRetorno(FALSE, "Ocorreu um erro ao registrar a venda.")));
+		} else {
+			$this->db->trans_commit();
+			print_r(json_encode($this->gerarRetorno(TRUE, "A venda foi registrada com sucesso.")));
+		}
 	}
 
 }

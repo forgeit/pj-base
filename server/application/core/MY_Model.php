@@ -13,6 +13,7 @@ class MY_Model extends CI_Model {
         if (!isset($data)) {
             return false;
         }
+
         return $this->db->insert($this->table, $data);
     }
 

@@ -46,7 +46,7 @@
 		iniciar();
 
 		function finalizarVenda() {
-			dataservice.salvar({ venda: vm.venda, carrinho: vm.carrinho}).then(success).catch(error);
+			dataservice.salvar({ venda: vm.venda, carrinho: vm.carrinho, valor_total: vm.valorTotalCarrinho }).then(success).catch(error);
 
 			function error(response) {
 				controllerUtils.feed(controllerUtils.messageType.ERROR, 'Ocorreu um erro ao registrar a venda.');
