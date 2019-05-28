@@ -52,6 +52,21 @@ class Venda extends MY_Controller {
 		// print_r(json_encode($array));
 	}
 
+	public function buscarContasPendentesCliente() {
+		$lista = $this->VendaModel->buscarContasPendentesCliente($this->uri->segment(3));
+		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
+	}
+
+	public function compra() {
+		$lista = $this->VendaModel->compra($this->uri->segment(3));
+		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
+	}
+
+	public function buscarContasPagasCliente() {
+		$lista = $this->VendaModel->buscarContasPagasCliente($this->uri->segment(3));
+		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
+	}
+
 	public function buscarTodos() {
 		// $lista = $this->GrupoModel->buscarTodosNativo();
 		// print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
@@ -122,6 +137,11 @@ class Venda extends MY_Controller {
 
 			if (!isset($objetoEntradaVenda->valorEntrada)) {
 				print_r(json_encode($this->gerarRetorno(FALSE, "O campo valor entrada é obrigatório.")));
+				die();
+			}
+
+			if (!isset($objetoEntradaVenda->dataPagamento)) {
+				print_r(json_encode($this->gerarRetorno(FALSE, "O campo data de pagamento é obrigatório.")));
 				die();
 			}
 		}
@@ -204,14 +224,17 @@ class Venda extends MY_Controller {
 		if ($compraParcelada) {
 			$valorParcela = ($vendaModel['valor_total'] - $vendaModel['valor_entrada']) / $vendaModel['forma_pagamento'];
 
-			$dataPagamento = $objetoEntradaVenda->dataPagamento;
-
 			for ($i = 0; $i < $vendaModel['forma_pagamento']; $i++) {
+				$crediario = array();
+				$crediario['id_venda'] = $idVenda;
 
+				$time = strtotime($objetoEntradaVenda->dataPagamento);
+				$crediario['data_vencimento'] = date("Y-m-d", strtotime("+" . $i . " month", $time));
+				$crediario['data_pagamento'] = NULL;
+				$crediario['valor_parcela'] = $valorParcela;
+				
+				$this->CrediarioModel->inserir($crediario);
 			}
-
-			print_r($valorParcela);
-
 		}
 
 		if ($this->db->trans_status() === FALSE){

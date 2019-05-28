@@ -138,5 +138,6 @@ $autoload['model'] = array(
 	'GrupoModel',
 	'ProdutoModel',
 	'VendaModel',
-	'VendaProdutoModel'
+	'VendaProdutoModel',
+	'CrediarioModel'
 );

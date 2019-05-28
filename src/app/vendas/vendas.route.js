@@ -25,6 +25,22 @@
 						}
 					]
 				}
+			})
+			.when('/compra/:id', {
+				templateUrl: 'src/app/vendas/vendas-visualizar.html',
+				controller: 'VisualizarVenda',
+				controllerAs: 'vm',
+				titulo: 'Visualizar Venda',
+				cabecalho: {
+					h1: 'Visualizar Venda',
+					breadcrumbs: [
+						{
+							nome: 'Vendas',
+							link: '/',
+							ativo: true
+						}
+					]
+				}
 			});
 	}
 

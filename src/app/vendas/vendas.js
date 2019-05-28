@@ -36,12 +36,12 @@
 
 		vm.venda = { dataPagamento: dataAuxiliar, parcelamento: 1 };
 
-		vm.carrinho = [
-			{id_produto: 10, codigo: "002", nome: "TESTE", quantidade: 10, valor: 10, valorTotalProduto: 100},
-			{id_produto: 10, codigo: "002", nome: "TESTE 02", quantidade: 10, valor: 10, valorTotalProduto: 100}
-		];
+		// vm.carrinho = [
+		// 	{id_produto: 10, codigo: "002", nome: "TESTE", quantidade: 10, valor: 10, valorTotalProduto: 100},
+		// 	{id_produto: 10, codigo: "002", nome: "TESTE 02", quantidade: 10, valor: 10, valorTotalProduto: 100}
+		// ];
 
-		vm.valorTotalCarrinho = 200;
+		// vm.valorTotalCarrinho = 200;
 
 		iniciar();
 
@@ -56,7 +56,12 @@
 				controllerUtils.feedMessage(response);
 
 				if (response.data.status == 'true') {
-					voltar();
+					delete vm.carrinho;
+					delete vm.venda;
+					vm.venda = { dataPagamento: dataAuxiliar, parcelamento: 1 };
+					delete vm.valorTotalCarrinho;
+
+					$('#modalPagamento').modal('hide');
 				}
 			}
 		}
