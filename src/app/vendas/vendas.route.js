@@ -26,7 +26,7 @@
 					]
 				}
 			})
-			.when('/compra/:id', {
+			.when('/compra/:id/:cliente', {
 				templateUrl: 'src/app/vendas/vendas-visualizar.html',
 				controller: 'VisualizarVenda',
 				controllerAs: 'vm',

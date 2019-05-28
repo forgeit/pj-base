@@ -81,3 +81,5 @@ $route['produto/excluir/(:num)'] = 'produto/excluir/$1';
 $route['venda/buscarContasPendentesCliente/(:num)'] = 'venda/buscarContasPendentesCliente/$1';
 $route['venda/buscarContasPagasCliente/(:num)'] = 'venda/buscarContasPagasCliente/$1';
 $route['venda/compra/(:num)'] = 'venda/compra/$1';
+$route['venda/pagar/(:num)'] = 'venda/pagar/$1';
+$route['venda/removerPagamento/(:num)'] = 'venda/removerPagamento/$1';

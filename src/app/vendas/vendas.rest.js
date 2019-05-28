@@ -12,13 +12,23 @@
 			salvar: salvar,
 			compra: compra,
 			buscarContasPendentesCliente: buscarContasPendentesCliente,
-			buscarContasPagasCliente: buscarContasPagasCliente
+			buscarContasPagasCliente: buscarContasPagasCliente,
+			pagar: pagar,
+			removerPagamento: removerPagamento
 		};
 
 		return service;
 
 		function atualizar(id, data) {
 			return $http.put(configuracaoREST.url + configuracaoREST.venda + 'atualizar/' + id, data);
+		}
+
+		function pagar(id) {
+			return $http.put(configuracaoREST.url + configuracaoREST.venda + 'pagar/' + id);
+		}
+
+		function removerPagamento(id) {
+			return $http.put(configuracaoREST.url + configuracaoREST.venda + 'removerPagamento/' + id);
 		}
 
 		function compra(data) {	

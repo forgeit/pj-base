@@ -25,7 +25,7 @@
 			criarOpcoesTabela();
 
 			function carregarObjeto(aData) {
-				controllerUtils.$location.path('compra/' + aData.id_venda);
+				controllerUtils.$location.path('compra/' + aData.id_venda + '/' + controllerUtils.$routeParams.id);
 				$scope.$apply();
 			}
 

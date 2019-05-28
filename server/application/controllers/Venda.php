@@ -62,21 +62,31 @@ class Venda extends MY_Controller {
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
 
+	public function pagar() {
+		$model = array();
+		$model['id_crediario'] = $this->uri->segment(3);
+		$model['data_pagamento'] = date('Y-m-d H:i:s');
+
+		$response = array('exec' => $this->CrediarioModel->atualizar($model['id_crediario'], $model, 'id_crediario'));
+		$array = $this->gerarRetorno($response, $response ? "Sucesso ao efetuar o pagamento." : "Erro ao efetuar o pagamento.");
+		print_r(json_encode($array));
+	}
+
+	public function removerPagamento() {
+		$model = array();
+		$model['id_crediario'] = $this->uri->segment(3);
+		$model['data_pagamento'] = NULL;
+
+		$response = array('exec' => $this->CrediarioModel->atualizar($model['id_crediario'], $model, 'id_crediario'));
+		$array = $this->gerarRetorno($response, $response ? "Sucesso ao remover o pagamento." : "Erro ao remover o pagamento.");
+		print_r(json_encode($array));
+	}
+
 	public function buscarContasPagasCliente() {
 		$lista = $this->VendaModel->buscarContasPagasCliente($this->uri->segment(3));
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
 
-	public function buscarTodos() {
-		// $lista = $this->GrupoModel->buscarTodosNativo();
-		// print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
-	}
-
-	public function buscarCombo() {
-		// $lista = $this->GrupoModel->buscarCombo();
-		// print_r(json_encode(array('data' => $lista ? $lista : array())));
-	}
-	
 	private function gerarRetorno($response, $mensagem) {
 		$message = array();
 		$message[] = $response == TRUE ? 

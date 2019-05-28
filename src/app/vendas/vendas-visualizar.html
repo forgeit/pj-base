@@ -25,8 +25,8 @@
 											<span class="label label-warning" ng-show="objeto.paga == 0">Aguardando Pagamento</span>
 										</td>
 										<td>
-											<button ng-if="objeto.paga == 0" class="btn btn-success btn-flat" style="width: 100px;">Pagar</button>
-											<button ng-if="objeto.paga == 1" class="btn btn-danger btn-flat" style="width: 100px;">Remover</button>
+											<button ng-if="objeto.paga == 0" class="btn btn-success btn-flat" style="width: 100px;" ng-click="vm.pagar(objeto.id_crediario)">Pagar</button>
+											<button ng-if="objeto.paga == 1" class="btn btn-danger btn-flat" style="width: 100px;" ng-click="vm.removerPagamento(objeto.id_crediario)">Remover</button>
 										</td>
 									</tr>
 								</tbody>
