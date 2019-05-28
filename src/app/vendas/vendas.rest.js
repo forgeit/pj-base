@@ -14,7 +14,8 @@
 			buscarContasPendentesCliente: buscarContasPendentesCliente,
 			buscarContasPagasCliente: buscarContasPagasCliente,
 			pagar: pagar,
-			removerPagamento: removerPagamento
+			removerPagamento: removerPagamento,
+			remover: remover
 		};
 
 		return service;

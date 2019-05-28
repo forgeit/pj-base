@@ -59,7 +59,7 @@
 			}
 
 			function remover(aData) {
-				dataservice.remover(aData.id_cliente).then(success).catch(error);
+				dataservice.remover(aData.id_venda).then(success).catch(error);
 
 				function error(response) {
 					controllerUtils.feed(controllerUtils.messageType.ERROR, 'Ocorreu um erro ao remover.');

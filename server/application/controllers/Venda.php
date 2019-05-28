@@ -3,53 +3,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Venda extends MY_Controller {
-
-	public function atualizar() {
-		// $data = $this->security->xss_clean($this->input->raw_input_stream);
-		// $grupo = json_decode($data);
-		// $grupoModel = array();
-		// $grupoModel['id_grupo'] = $this->uri->segment(3);
-
-		// if (isset($grupo->descricao)) {
-		// 	if (!trim($grupo->descricao)) {
-		// 		print_r(json_encode($this->gerarRetorno(FALSE, "O campo descrição é obrigatório.")));
-		// 		die();
-		// 	} else {
-		// 		$grupoModel['descricao'] = mb_strtoupper($grupo->descricao);
-		// 		if ($this->GrupoModel->buscarPorDescricaoId($grupoModel['descricao'], $grupoModel['id_grupo'])) {
-		// 			print_r(json_encode($this->gerarRetorno(FALSE, "o grupo informado já está registrado.")));
-		// 			die();
-		// 		}
-		// 	}
-		// } else {
-		// 	print_r(json_encode($this->gerarRetorno(FALSE, "O campo descrição é obrigatório.")));
-		// 	die();
-		// }
-
-		// $response = array('exec' => $this->GrupoModel->atualizar($grupoModel['id_grupo'], $grupoModel, 'id_grupo'));
-		// $array = $this->gerarRetorno($response, $response ? "Sucesso ao atualizar o registro." : "Erro ao atualizar o registro.");
-		// print_r(json_encode($array));
-	}
-
+	
 	public function excluir() {
-		// $response = $this->GrupoModel->excluir($this->uri->segment(3), 'id_grupo');
-		// $message = array();
+		$this->db->trans_begin();
 
-		// $message[] = $response == TRUE ? 
-		// 	array('tipo' => 'success', 'mensagem' => 'Sucesso ao remover o registro.') : 
-		// 	array('tipo' => 'error', 'mensagem' => 'Erro ao remover o registro.');
-			
-		// $array = array(
-		// 	'message' => $message,
-		// 	'status' => $response == TRUE ? 'true' : 'false'
-		// );
-		// print_r(json_encode($array));
-	}
+		$this->VendaProdutoModel->remover($this->uri->segment(3));
+		$this->CrediarioModel->remover($this->uri->segment(3));
+		$this->VendaModel->excluir($this->uri->segment(3), 'id_venda');
 
-	public function buscar() {
-		// $array = array('data' => 
-		// 	array('GrupoDTO' => $this->GrupoModel->buscarPorId($this->uri->segment(2), 'id_grupo')));
-		// print_r(json_encode($array));
+		if ($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			print_r(json_encode($this->gerarRetorno(FALSE, "Ocorreu um erro ao remover a venda.")));
+		} else {
+			$this->db->trans_commit();
+			print_r(json_encode($this->gerarRetorno(TRUE, "A venda foi removida com sucesso.")));
+		}
 	}
 
 	public function buscarContasPendentesCliente() {
