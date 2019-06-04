@@ -26,6 +26,22 @@
 					]
 				}
 			})
+			.when('/todas-vendas', {
+				templateUrl: 'src/app/vendas/vendas-lista.html',
+				controller: 'VendasLista',
+				controllerAs: 'vm',
+				titulo: 'Vendas Efetuadas',
+				cabecalho: {
+					h1: 'Vendas Efetuadas',
+					breadcrumbs: [
+						{
+							nome: 'Vendas',
+							link: '/',
+							ativo: true
+						}
+					]
+				}
+			})
 			.when('/compra/:id/:cliente', {
 				templateUrl: 'src/app/vendas/vendas-visualizar.html',
 				controller: 'VisualizarVenda',

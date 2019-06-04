@@ -25,6 +25,25 @@ class Venda extends MY_Controller {
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
 
+	public function visualizarVenda() {
+
+		$retorno = array();
+
+		$venda = $this->VendaModel->visualizarVenda($this->uri->segment(3));
+		
+		$retorno['venda'] = $venda[0];
+
+		$produtos = $this->ProdutoModel->buscarPorVenda($this->uri->segment(3));
+		$retorno['produtos'] = $produtos;
+
+		if ($retorno['venda']['consultar_crediario'] == 1) {
+			$crediario = $this->CrediarioModel->buscarPorVenda($this->uri->segment(3));
+			$retorno['crediario'] = $crediario;
+		}
+
+		print_r(json_encode(array('data' => array ('datatables' => $retorno ? $retorno : array()))));
+	}
+
 	public function compra() {
 		$lista = $this->VendaModel->compra($this->uri->segment(3));
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
@@ -65,6 +84,11 @@ class Venda extends MY_Controller {
 			'status' => $response == TRUE ? 'true' : 'false'
 		);
 		return $array;
+	}
+
+	public function buscarTodos() {
+		$lista = $this->VendaModel->buscarTodosNativo();
+		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
 
 	public function salvar() {

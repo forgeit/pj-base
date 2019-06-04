@@ -15,10 +15,16 @@
 			buscarContasPagasCliente: buscarContasPagasCliente,
 			pagar: pagar,
 			removerPagamento: removerPagamento,
-			remover: remover
+			remover: remover,
+			buscarTodos: buscarTodos,
+			visualizarVenda: visualizarVenda
 		};
 
 		return service;
+
+		function visualizarVenda(id) {
+			return $http.get(configuracaoREST.url + configuracaoREST.venda + 'visualizarVenda/' + id);
+		}
 
 		function atualizar(id, data) {
 			return $http.put(configuracaoREST.url + configuracaoREST.venda + 'atualizar/' + id, data);
@@ -49,7 +55,7 @@
 		}
 
 		function buscarTodos(data) {
-			return $http.get(configuracaoREST.url + configuracaoREST.venda);
+			return $http.get(configuracaoREST.url + configuracaoREST.venda + 'buscarTodos');
 		}
 
 		function salvar(data) {

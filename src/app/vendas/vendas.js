@@ -6,9 +6,9 @@
 		.module('app.vendas')
 		.controller('Vendas', Vendas);
 
-	Vendas.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'vendasRest', 'produtoRest', 'clienteRest'];
+	Vendas.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'vendasRest', 'produtoRest', 'clienteRest', '$http'];
 
-	function Vendas(controllerUtils, AuthToken, $rootScope, jwtHelper, dataservice, produtoRest, clienteRest) {
+	function Vendas(controllerUtils, AuthToken, $rootScope, jwtHelper, dataservice, produtoRest, clienteRest, $http) {
 		var vm = this;
 
 		vm.listaProdutos = [];
@@ -56,7 +56,11 @@
 				controllerUtils.feedMessage(response);
 
 				if (response.data.status == 'true') {
+
+					$http.post('http://localhost/jenti/index.php', vm.carrinho);
+
 					delete vm.carrinho;
+					vm.carrinho = [];
 					delete vm.venda;
 					vm.venda = { dataPagamento: dataAuxiliar, parcelamento: 1 };
 					delete vm.valorTotalCarrinho;

@@ -6,6 +6,49 @@ class VendaModel extends MY_Model {
 		$this->table = 'venda';
 	}
 
+	function visualizarVenda($id) {
+		$sql = "SELECT
+				v.id_venda,
+				forma_pagamento > 1 AS consultar_crediario,
+				DATE_FORMAT(v.data_hora, '%d/%m/%y %h:%i:%s') AS data_hora_venda,
+				CASE WHEN v.forma_pagamento > 1 THEN CONCAT(v.forma_pagamento, ' parcelas.') ELSE 'À vista' END AS forma_pagamento,
+				Concat('R$ ', Replace (Replace (Replace  (Format(v.valor_entrada, 2), '.', '|'), ',', '.'), '|', ',')) as valor_entrada,
+				Concat('R$ ', Replace (Replace (Replace  (Format(v.valor_total, 2), '.', '|'), ',', '.'), '|', ',')) as valor_total,
+				CASE WHEN c.nome IS NULL THEN '-' ELSE c.nome END as cliente,
+				c.id_cliente
+				FROM venda v
+				LEFT JOIN cliente c ON c.id_cliente = v.id_cliente
+				WHERE v.id_venda = ?";
+
+        $query = $this->db->query($sql, array($id));
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+	}
+
+
+	function buscarTodosNativo() {
+		$sql = "SELECT
+				v.id_venda,
+				DATE_FORMAT(v.data_hora, '%d/%m/%y %h:%i:%s') AS data_hora_venda,
+				CASE WHEN v.forma_pagamento > 1 THEN CONCAT(v.forma_pagamento, ' parcelas.') ELSE 'À vista' END AS forma_pagamento,
+				CASE WHEN v.valor_entrada > 0 THEN Concat('R$ ', Replace (Replace (Replace  (Format(v.valor_entrada, 2), '.', '|'), ',', '.'), '|', ',')) ELSE '-' END as valor_entrada,
+				Concat('R$ ', Replace (Replace (Replace  (Format(v.valor_total, 2), '.', '|'), ',', '.'), '|', ',')) as valor_total,
+				CASE WHEN c.nome IS NULL THEN '-' ELSE c.nome END as cliente
+				FROM venda v
+				LEFT JOIN cliente c ON c.id_cliente = v.id_cliente";
+
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+	}
+
+
 	function compra($id) {
 		$sql = "SELECT
 				c.id_crediario,
@@ -67,7 +110,7 @@ class VendaModel extends MY_Model {
 
         $query = $this->db->query($sql, array($id));
         if ($query->num_rows() > 0) {
-            return $query->result_array();
+            return $query->row_array();
         } else {
             return null;
         }

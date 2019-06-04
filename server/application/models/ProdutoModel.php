@@ -45,6 +45,25 @@ class ProdutoModel extends MY_Model {
         }
 	}
 
+	function buscarPorVenda($venda) {
+		$sql = "SELECT
+				vp.id_venda_produto,
+				p.nome,
+				vp.quantidade,
+				Concat('R$ ', Replace (Replace (Replace  (Format(vp.valor, 2), '.', '|'), ',', '.'), '|', ',')) as valor,
+				Concat('R$ ', Replace (Replace (Replace  (Format((vp.quantidade * vp.valor), 2), '.', '|'), ',', '.'), '|', ',')) as valor_total
+				FROM venda_produto vp
+				JOIN produto p ON p.id_produto = vp.id_produto
+				WHERE vp.id_venda = ?";
+
+        $query = $this->db->query($sql, array($venda));
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+	}
+
 	function buscarPorNome($nome) {
 		$sql = "SELECT 
 				id_produto

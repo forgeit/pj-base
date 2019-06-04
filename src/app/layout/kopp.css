@@ -209,3 +209,7 @@ table tr td:last-child {
     opacity: 1;
     color: #FFF;
 }
+
+.modal-backdrop {
+    background-color: #5d5fa6;
+}
