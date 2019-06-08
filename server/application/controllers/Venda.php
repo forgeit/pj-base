@@ -49,6 +49,11 @@ class Venda extends MY_Controller {
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
 	}
 
+	public function buscarDadosImpressao() {
+		$lista = $this->VendaModel->buscarDadosImpressao($this->uri->segment(3), $this->uri->segment(4));
+		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista[0] : array()))));
+	}
+
 	public function pagar() {
 		$model = array();
 		$model['id_crediario'] = $this->uri->segment(3);

@@ -28,6 +28,26 @@ class VendaModel extends MY_Model {
         }
 	}
 
+	function buscarDadosImpressao($venda, $crediario) {
+		$sql = "SELECT 
+				(
+					SELECT 
+					DATE_FORMAT(c.data_vencimento, '%d/%m/%y') AS data_hora
+					FROM crediario c WHERE c.id_crediario = ?
+				) AS data_parcela,
+				COUNT(CASE WHEN data_pagamento IS NULL THEN 0 ELSE NULL END) AS pendente,
+				COUNT(CASE WHEN data_pagamento IS NOT NULL THEN 0 ELSE NULL END) AS paga
+				FROM crediario c 
+				WHERE
+				c.id_venda = ?";
+
+        $query = $this->db->query($sql, array($crediario, $venda));
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+	}
 
 	function buscarTodosNativo() {
 		$sql = "SELECT

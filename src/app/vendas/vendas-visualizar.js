@@ -6,9 +6,9 @@
 		.module('app.vendas')
 		.controller('VisualizarVenda', VisualizarVenda);
 
-	VisualizarVenda.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'vendasRest', 'produtoRest', 'clienteRest', 'vendasRest', '$window'];
+	VisualizarVenda.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'vendasRest', 'produtoRest', 'clienteRest', 'vendasRest', '$window', '$http'];
 
-	function VisualizarVenda(controllerUtils, AuthToken, $rootScope, jwtHelper, dataservice, produtoRest, clienteRest, vendasRest, $window) {
+	function VisualizarVenda(controllerUtils, AuthToken, $rootScope, jwtHelper, dataservice, produtoRest, clienteRest, vendasRest, $window, $http) {
 		var vm = this;
 
 		vm.voltar = voltar;
@@ -17,8 +17,8 @@
 
 		buscarDados();
 
-		function pagar(id) {
-			vendasRest.pagar(id).then(success).catch(error);
+		function pagar(objeto) {
+			vendasRest.pagar(objeto.id_crediario).then(success).catch(error);
 
 			function error(response) {
 				controllerUtils.feed(controllerUtils.messageType.ERROR, 'Ocorreu um erro ao efetuar o pagamento.');
@@ -28,8 +28,28 @@
 				controllerUtils.feedMessage(response);
 
 				if (response.data.status == 'true') {
+					buscarDadosImpressao(objeto.id_crediario);
 					buscarDados();
 				}
+			}
+		}
+
+		function buscarDadosImpressao(crediario) {
+			vendasRest.buscarDadosImpressao(controllerUtils.$routeParams.id, crediario).then(success).catch(error);
+
+			function error(response) {
+				console.log(response);
+				controllerUtils.feed(controllerUtils.messageType.ERROR, 'Erro ao efetuar a impressão do cupom.');
+			}
+
+			function success(response) {
+				var dados = { 
+					dataParcela: response.data.data.datatables.data_parcela,
+					paga: response.data.data.datatables.paga,
+					pendente: response.data.data.datatables.pendente
+				};
+
+				$http.post('http://localhost/cupom/imprimir-recibo-parcela.php', dados);
 			}
 		}
 

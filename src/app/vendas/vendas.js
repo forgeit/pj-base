@@ -57,7 +57,7 @@
 
 				if (response.data.status == 'true') {
 
-					$http.post('http://localhost/jenti/index.php', vm.carrinho);
+					$http.post('http://localhost/cupom/index.php', vm.carrinho);
 
 					delete vm.carrinho;
 					vm.carrinho = [];

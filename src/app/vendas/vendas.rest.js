@@ -17,10 +17,15 @@
 			removerPagamento: removerPagamento,
 			remover: remover,
 			buscarTodos: buscarTodos,
-			visualizarVenda: visualizarVenda
+			visualizarVenda: visualizarVenda,
+			buscarDadosImpressao: buscarDadosImpressao
 		};
 
 		return service;
+
+		function buscarDadosImpressao(venda, crediario) {
+			return $http.get(configuracaoREST.url + configuracaoREST.venda + 'buscarDadosImpressao/' + venda + '/' + crediario);
+		}
 
 		function visualizarVenda(id) {
 			return $http.get(configuracaoREST.url + configuracaoREST.venda + 'visualizarVenda/' + id);
