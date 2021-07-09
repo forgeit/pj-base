@@ -1,15 +1,13 @@
-﻿(function () {
+(function () {
 	'use strict';
 
 	var core = angular.module('app.core');
 
 	var configuracaoREST = {
-		cliente: 'cliente/',
-		grupo: 'grupo/',
-		produto: 'produto/',
-		venda: 'venda/',
-		// url: 'http://192.168.100.111/dagyane/server/'
-		url: 'http://localhost/dagyane/server/'
+		demanda: 'demanda/',
+		pessoa: 'pessoa/',
+		tipoDemanda: 'tipo-demanda/',
+		url: 'http://localhost/mathias/server/'
 		// url: 'http://sistema.mathiasbertram.com.br/server/'
 	};
 

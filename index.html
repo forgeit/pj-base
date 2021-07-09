@@ -8,21 +8,22 @@
 	<meta http-equiv="CACHE-CONTROL" content="NO-STORE">
 
 	<title>Sistema</title>
-    <base href="/dagyane/">
+    <base href="/projeto-base/">
     
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<link rel="stylesheet" type="text/css" href="bower_components/toastr/toastr.min.css">
-	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="bower_components/AdminLTE/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-	<link rel="stylesheet" type="text/css" href="bower_components/admin-lte/dist/css/AdminLTE.css">
-	<!-- <link rel="stylesheet" type="text/css" href="bower_components/admin-lte/dist/css/skins/_all-skins.min.css"> -->
-	<link rel="stylesheet" type="text/css" href="bower_components/admin-lte/dist/css/skins/skin-purple-light.min.css">
+	<link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="bower_components/AdminLTE/dist/css/skins/_all-skins.min.css">
 	<link rel="stylesheet" type="text/css" href="src/app/layout/kopp.css">
-	<link rel="stylesheet" type="text/css" href="bower_components/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="vendor/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="bower_components/angular-loading-bar/src/loading-bar.css">
+	<link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.min.css">
+
 </head>
-<body class="hold-transition skin-purple-light sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 	<div id="loading-bar-container"></div>	
 	<div class="wrapper">
 		<menu-topo></menu-topo>
@@ -34,12 +35,12 @@
 	</div>
 
 	<!-- vendor -->
-	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+	<script src="bower_components/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
-	<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="bower_components/fastclick/lib/fastclick.js"></script>
-	<script src="bower_components/admin-lte/dist/js/adminlte.min.js"></script>
+	<script src="bower_components/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<script src="bower_components/AdminLTE/plugins/fastclick/fastclick.js"></script>
+	<script src="bower_components/AdminLTE/dist/js/app.min.js"></script>
 	<script type="text/javascript" src="bower_components/jquery-confirm/jquery.confirm.min.js"></script>
 	<script type="text/javascript" src="bower_components/toastr/toastr.min.js"></script>
 	<!-- fim vendor -->
@@ -49,19 +50,17 @@
 	<script type="text/javascript" src="bower_components/cpf_cnpj/build/cpf_cnpj.min.js"></script>
 	<script type="text/javascript" src="bower_components/ng-cpf-cnpj/lib/ngCpfCnpj.js"></script>
 	<script type="text/javascript" src="bower_components/angular-ui-mask/dist/mask.min.js"></script>
-	<script type="text/javascript" src="bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
-	<script type="text/javascript" src="bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+	<script type="text/javascript" src="vendor/angular-datatables/dist/angular-datatables.js"></script>
+	<script type="text/javascript" src="vendor/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
+	<script type="text/javascript" src="bower_components/jquery-ui/ui/widgets/datepicker.js"></script>
 	<script type="text/javascript" src="bower_components/angular-loading-bar/src/loading-bar.js"></script>	
 	<script type="text/javascript" src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
 	<script type="text/javascript" src="bower_components/ngstorage/ngStorage.min.js"></script>
 	<script type="text/javascript" src="bower_components/angular-jwt/dist/angular-jwt.min.js"></script>
-	<script type="text/javascript" src="bower_components/angular-input-masks/angular-input-masks-standalone.js"></script>
-	<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
 
 	<script type="text/javascript" src="src/app/app.module.js"></script>
 
-	<script type="text/javascript" src="src/app/core/angular-locale_pt-br.js"></script>
 	<script type="text/javascript" src="src/app/layout/layout.module.js"></script>
 	<script type="text/javascript" src="src/app/layout/rodape.directive.js"></script>
 	<script type="text/javascript" src="src/app/layout/menu-topo.directive.js"></script>
@@ -98,35 +97,5 @@
 	<script type="text/javascript" src="src/app/usuario/usuario.route.js"></script>
 	<script type="text/javascript" src="src/app/usuario/usuario.rest.js"></script>
 	<script type="text/javascript" src="src/app/usuario/alterar-senha.js"></script>
-
-	<script type="text/javascript" src="src/app/home/home.module.js"></script>
-	<script type="text/javascript" src="src/app/home/home.js"></script>
-
-	<script type="text/javascript" src="src/app/cliente/cliente.module.js"></script>
-	<script type="text/javascript" src="src/app/cliente/cliente.route.js"></script>
-	<script type="text/javascript" src="src/app/cliente/cliente.rest.js"></script>
-	<script type="text/javascript" src="src/app/cliente/cliente.js"></script>
-	<script type="text/javascript" src="src/app/cliente/cliente-lista.js"></script>
-	<script type="text/javascript" src="src/app/cliente/contas-pendentes.js"></script>
-	<script type="text/javascript" src="src/app/cliente/contas-pagas.js"></script>
-
-	<script type="text/javascript" src="src/app/grupo/grupo.module.js"></script>
-	<script type="text/javascript" src="src/app/grupo/grupo.route.js"></script>
-	<script type="text/javascript" src="src/app/grupo/grupo.rest.js"></script>
-	<script type="text/javascript" src="src/app/grupo/grupo.js"></script>
-	<script type="text/javascript" src="src/app/grupo/grupo-lista.js"></script>
-
-	<script type="text/javascript" src="src/app/produto/produto.module.js"></script>
-	<script type="text/javascript" src="src/app/produto/produto.route.js"></script>
-	<script type="text/javascript" src="src/app/produto/produto.rest.js"></script>
-	<script type="text/javascript" src="src/app/produto/produto.js"></script>
-	<script type="text/javascript" src="src/app/produto/produto-lista.js"></script>
-
-	<script type="text/javascript" src="src/app/vendas/vendas.module.js"></script>
-	<script type="text/javascript" src="src/app/vendas/vendas.route.js"></script>
-	<script type="text/javascript" src="src/app/vendas/vendas.rest.js"></script>
-	<script type="text/javascript" src="src/app/vendas/vendas.js"></script>
-	<script type="text/javascript" src="src/app/vendas/vendas-visualizar.js"></script>
-	<script type="text/javascript" src="src/app/vendas/vendas-lista.js"></script>
 </body>
 </html>

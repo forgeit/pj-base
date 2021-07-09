@@ -33,6 +33,8 @@ class Login extends MY_Controller {
 	    return $this->jwt->encode(array(
 	   	  'id' => $usuario['id_usuario'],
 	   	  'nome' => $usuario['nome'],
+	   	  'cargo' => $usuario['cargo'],
+	   	  'imagem' => $usuario['imagem'],
 	      'issuedAt'=> date(DATE_ISO8601, strtotime("now")),
 	      'dtBegin' => strtotime("now"),
 	      'ttl'=> $CONSUMER_TTL

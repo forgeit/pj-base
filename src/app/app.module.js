@@ -7,11 +7,6 @@
 		'app.layout',
 		'app.login',
 		'app.usuario',
-		'app.grupo',
-		'app.home',
-		'app.vendas',
-		'app.cliente',
-		'app.produto',
 		'angularFileUpload']);
 
 })();
