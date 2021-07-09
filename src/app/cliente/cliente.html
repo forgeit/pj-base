@@ -1,0 +1,72 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-primary">
+			<form novalidate name="formulario" ng-submit="vm.editar ? vm.atualizar(formulario) : vm.salvar(formulario)">
+				<div class="box-body">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="form-group" ng-class="formulario.nome.$dirty && formulario.nome.$invalid ? 'has-error' : ''">
+								<label for="nome">Nome: *</label>
+								<input id="nome" type="text" name="nome" class="form-control" placeholder="Informe o nome do cliente" ng-model="vm.cliente.nome" required>
+								<span class="help-block" ng-show="formulario.nome.$dirty && formulario.nome.$invalid">O campo é obrigatório</span>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="form-group" ng-class="formulario.telefone.$dirty && formulario.telefone.$invalid ? 'has-error' : ''">
+								<label for="telefone">Celular: *</label>
+								<input id="telefone" type="text" name="telefone" class="form-control" ng-model="vm.cliente.telefone" ui-mask="(99) 9999-9999?9" required>
+								<span class="help-block" ng-show="formulario.telefone.$dirty && formulario.telefone.$invalid">O campo é obrigatório / Inválido.</span>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="form-group" ng-class="formulario.email.$dirty && formulario.email.$invalid ? 'has-error' : ''">
+								<label for="email">E-mail:</label>
+								<input id="email" type="email" name="email" class="form-control" placeholder="Informe o e-mail" ng-model="vm.cliente.email">
+								<span class="help-block" ng-show="formulario.email.$dirty && formulario.email.$error.email">O e-mail informado é inválido</span>
+							</div>
+						</div>
+
+						<div class="col-md-3" ng-class="formulario.cpf.$dirty && formulario.cpf.$invalid ? 'has-error' : ''">
+							<div class="form-group">
+								<label for="cpf">CPF:</label>
+								<input id="cpf" type="text" name="cpf" class="form-control" ng-model="vm.cliente.cpf_cnpj" ng-cpf ui-mask="999.999.999-99">
+								<span class="help-block" ng-show="formulario.cpf.$dirty && formulario.cpf.$invalid">O CPF informado é inválido.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-footer">
+					<button type="submit" class="btn btn-primary btn-flat" ng-show="vm.editar">Atualizar</button>
+					<button type="submit" class="btn btn-primary btn-flat" ng-hide="vm.editar" ng-disabled="formulario.$invalid">Salvar</button>
+					<button type="button" class="btn btn-primary btn-flat" ng-click="vm.voltar()">Voltar</button>
+				</div>
+				</form>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="panel panel-danger">
+								<div class="panel-heading">
+									<h3 class="panel-title text-bold">Contas Pendentes</h3>
+								</div>
+								<div class="panel-body" ng-controller="ContasPendentes as vm" style="font-size: 0.9em;">
+								    <lista></lista>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="panel panel-success">
+								<div class="panel-heading">
+									<h3 class="panel-title text-bold">Contas Pagas</h3>
+								</div>
+								<div class="panel-body" ng-controller="ContasPagas as vm">
+								    <lista></lista>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

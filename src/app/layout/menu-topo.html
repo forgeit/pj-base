@@ -1,30 +1,45 @@
 <header class="main-header" ng-controller="MenuTopoController as vm" ng-show="vm.isLogged()">
-    <a href="/mathias" class="logo">
-        <span class="logo-lg"><b>Mathias</b></span>
-    </a>
-    <nav class="navbar navbar-static-top">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastros <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="pessoa">Pessoa</a></li>
-                        <li><a href="tipo-demanda">Tipo de Demanda</a></li>
-                        <li><a href="demanda">Demanda</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+
+<nav class="navbar navbar-default" style="margin-left: 0px;">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Toda Linda</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        
+        <li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastros <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="cliente">Cliente</a></li>
+				<li><a href="grupo">Grupo</a></li>
+				<li><a href="produto">Produto</a></li>
+			</ul>
+		</li>
+		<li class="dropdown">
+			<a href="todas-vendas" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vendas</a>
+		</li>
+		<li class="dropdown">
+			<a href="vendas" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PDV</a>
+		</li>
+        
+      </ul>
+	  
+	  <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img ng-src="{{ usuarioLogado.imagem }}" class="user-image" alt="User Image">
                         <span class="hidden-xs">{{ usuarioLogado.nome }}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="user-header">
-                            <img ng-src="{{ usuarioLogado.imagem }}" class="img-circle" alt="Imagem do Usuário">
-                            <p>{{ usuarioLogado.nome + ' - ' + usuarioLogado.cargo }}</p>
-                        </li>
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="alterar-senha" class="btn btn-default btn-flat">Alterar Senha</a>
@@ -36,6 +51,9 @@
                     </ul>
                 </li>
             </ul>
-        </div>
-    </nav>
+      
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 </header>

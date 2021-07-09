@@ -1,0 +1,149 @@
+<style type="text/css">
+	i {
+		cursor: pointer;
+	}
+</style>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-primary">
+			<form novalidate name="formulario" ng-submit="vm.editar ? vm.atualizar(formulario) : vm.salvar(formulario)">
+				<div class="box-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="input-group">
+										<input type="text" ng-model="vm.produtoSelecionado" placeholder="Informe o nome do produto" uib-typeahead="produto as produto.codigo + ' - ' + produto.nome for produto in vm.listaProdutos | filter:{ nome: $viewValue} | limitTo:8" class="form-control">
+
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-primary btn-flat" ng-click="vm.adicionarProdutoNoCarrinho(vm.produtoSelecionado)">Adicionar</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="row">
+								<div class="col-md-12">
+									<table class="table table-bordered" ng-show="vm.carrinho.length">
+										<thead>
+											<tr style="background-color: #ccc; font-weight: bold; font-size: 10px;">
+												<td style="width: 15%;">Cód.</td>
+												<td style="width: 50%">Produto</td>
+												<td style="width: 10%; text-align: center;">Qtd</td>
+												<td style="width: 10%; text-align: center;">Valor</td>
+												<td style="width: 15%; text-align: center;">Total</td>
+											</tr>
+										</thead>
+										<tbody style="font-size: 12px;">
+											<tr ng-repeat="produto in vm.carrinho">
+												<td style="width: 15%;" ng-bind="produto.codigo"></td>
+												<td style="width: 50%" class="text-uppercase" ng-bind="produto.nome"></td>
+												<td style="width: 10%; text-align: center;">
+													<i class="fa fa-minus" style="font-weight: bold;" ng-click="vm.reduzirQuantidade(produto)"></i>&nbsp;&nbsp;
+													{{ produto.quantidade }}
+													&nbsp;&nbsp;<i class="fa fa-plus" style="font-weight: bold;" ng-click="vm.aumentarQuantidade(produto)"></i>
+												</td>
+												<td style="width: 10%; text-align: center;">{{ produto.valor | currency }}</td>
+												<td style="width: 15%; text-align: center;">{{ produto.valorTotalProduto | currency }}</td>
+											</tr>
+										</tbody>
+										<tfoot style="border-top: 2px solid #ccc; font-size: 17px;">
+											<tr>
+												<td colspan="4" style="text-align: right; font-weight: bold;">Valor Total</td>
+												<td style="text-align: center;">{{ vm.valorTotalCarrinho | currency }}</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="box-footer" ng-show="vm.carrinho.length > 0">
+					<button type="submit" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#modalPagamento">Finalizar Venda</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalPagamento">
+	<form name="formulario" novalidate>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Pagamento - Valor Total: {{ vm.valorTotalCarrinho | currency }}</h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="row" >
+					<div class="col-md-12">
+						<div class="form-group" ng-class="formulario.parcelamento.$dirty && formulario.parcelamento.$invalid ? 'has-error' : ''">
+							<label for="parcelamento">Parcelamento: *</label>
+							<select class="form-control" id="parcelamento" name="parcelamento" ng-options="parcelamento.id as parcelamento.descricao for parcelamento in vm.parcelas" ng-model="vm.venda.parcelamento" required>
+							</select>
+							<span class="help-block" ng-show="formulario.descricao.$dirty && formulario.descricao.$invalid">O campo é obrigatório</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" ng-if="vm.venda.parcelamento > 1" style="margin-top: 10px;">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="descricao">Cliente: * </label>
+							<input name="cliente" type="text" ng-model="vm.venda.cliente" placeholder="Informe o nome do cliente" uib-typeahead="cliente as cliente.telefone + ' - ' + cliente.nome for cliente in vm.listaClientes | filter:{ nome: $viewValue} | limitTo:8" class="form-control" required>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" ng-if="vm.venda.parcelamento > 1" style="margin-top: 10px;">
+					<div class="col-md-12">
+						<div class="form-group" ng-class="formulario.valorEntrada.$dirty && formulario.valorEntrada.$invalid ? 'has-error' : ''">
+							<label for="valorEntrada">Valor de Entrada:</label>
+		                    <input id="valorEntrada" name="valorEntrada" type="text" placeholder="Informe o valor de entrada" class="form-control" ng-model="vm.venda.valorEntrada"  ui-money-mask ng-init="vm.venda.valorEntrada = 0" required>
+							<span class="help-block" ng-show="formulario.descricao.$dirty && formulario.descricao.$invalid">O campo é obrigatório</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" ng-if="vm.venda.parcelamento > 1" style="margin-top: 10px;">
+					<div class="col-md-12">
+						<div class="form-group" ng-class="formulario.parcelamento.$dirty && formulario.parcelamento.$invalid ? 'has-error' : ''" >
+							<label for="parcelamento">Data do Primeiro Pagamento: *</label>
+		                    <input id="dataParcelamento" name="dataParcelamento" type="text" placeholder="Informe a data do primeiro pagamento" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="vm.venda.dataPagamento" is-open="focus"  ng-focus="focus=true" required>
+							<span class="help-block" ng-show="formulario.descricao.$dirty && formulario.descricao.$invalid">O campo é obrigatório</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" ng-if="vm.venda.parcelamento > 1">
+					<div class="col-md-12">
+						<table class="table table-bordered" ng-show="vm.carrinho.length">
+							<thead>
+								<tr style="background-color: #ccc; font-weight: bold; font-size: 10px;">
+									<td style="width: 30%">Valor Total</td>
+									<td style="width: 70%">Forma de Pagamento</td>
+								</tr>
+							</thead>
+							<tbody style="font-size: 12px;">
+								<tr>
+									<td style="width: 30%">{{ vm.valorTotalCarrinho | currency }}</td>
+									<td style="width: 70%">
+										{{ vm.venda.parcelamento > 1 ? 'Compra parcelada em ' + vm.venda.parcelamento + ' vezes de ' + (((vm.valorTotalCarrinho - (vm.venda.valorEntrada ? vm.venda.valorEntrada : 0))  / vm.venda.parcelamento ) | currency ) : 'À Vista.' }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary btn-flat" ng-click="vm.finalizarVenda()">Finalizar</button>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>

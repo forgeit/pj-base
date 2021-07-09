@@ -8,8 +8,10 @@
 		'ui.mask', 
 		'datatables', 
 		'datatables.bootstrap', 
+		'ui.bootstrap', 
 		'core.utils', 
 		'angular-loading-bar',
+		'ui.utils.masks',
 		'ngStorage',
 		'angular-jwt',
 		'core.auth']);
