@@ -55,32 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['upload'] = 'upload/processar';
 $route['login/entrar'] = 'login/entrar';
 $route['usuario/alterar-senha/(:num)'] = 'usuario/alterarSenha/$1';
-$route['cliente/(:num)'] = 'cliente/buscar/$1';
-$route['cliente'] = 'cliente/buscarTodos';
 $route['ver-arquivo/demanda/(:num)/arquivo/(:num)'] = 'verArquivo/porDemanda/$1/$2';//Apenas para exemplo.
-
-$route['cliente/salvar'] = 'cliente/salvar';
-$route['cliente/atualizar/(:num)'] = 'cliente/atualizar/$1';
-$route['cliente/excluir/(:num)'] = 'cliente/excluir/$1';
-
-
-$route['grupo'] = 'grupo/buscarTodos';
-$route['grupo/combo'] = 'grupo/buscarCombo';
-$route['grupo/(:num)'] = 'grupo/buscar/$1';
-$route['grupo/salvar'] = 'grupo/salvar';
-$route['grupo/atualizar/(:num)'] = 'grupo/atualizar/$1';
-$route['grupo/excluir/(:num)'] = 'grupo/excluir/$1';
-
-$route['produto'] = 'produto/buscarTodos';
-$route['produto/(:num)'] = 'produto/buscar/$1';
-$route['produto/salvar'] = 'produto/salvar';
-$route['produto/atualizar/(:num)'] = 'produto/atualizar/$1';
-$route['produto/excluir/(:num)'] = 'produto/excluir/$1';
-
-
-$route['venda/buscarContasPendentesCliente/(:num)'] = 'venda/buscarContasPendentesCliente/$1';
-$route['venda/buscarContasPagasCliente/(:num)'] = 'venda/buscarContasPagasCliente/$1';
-$route['venda/compra/(:num)'] = 'venda/compra/$1';
-$route['venda/pagar/(:num)'] = 'venda/pagar/$1';
-$route['venda/removerPagamento/(:num)'] = 'venda/removerPagamento/$1';
-$route['venda/excluir/(:num)'] = 'venda/excluir/$1';
