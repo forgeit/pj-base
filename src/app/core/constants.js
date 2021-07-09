@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
 	'use strict';
 
 	var core = angular.module('app.core');
@@ -8,6 +8,7 @@
 		grupo: 'grupo/',
 		produto: 'produto/',
 		venda: 'venda/',
+		// url: 'http://192.168.100.111/dagyane/server/'
 		url: 'http://localhost/dagyane/server/'
 		// url: 'http://sistema.mathiasbertram.com.br/server/'
 	};

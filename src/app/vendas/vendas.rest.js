@@ -18,10 +18,20 @@
 			remover: remover,
 			buscarTodos: buscarTodos,
 			visualizarVenda: visualizarVenda,
-			buscarDadosImpressao: buscarDadosImpressao
+			buscarDadosImpressao: buscarDadosImpressao,
+			reimprimirVenda: reimprimirVenda,
+			buscarDadosHome: buscarDadosHome
 		};
 
 		return service;
+
+		function buscarDadosHome() {
+			return $http.get(configuracaoREST.url + configuracaoREST.venda + 'buscarDadosHome');
+		}
+
+		function reimprimirVenda(venda) {
+			return $http.get(configuracaoREST.url + configuracaoREST.venda + 'reimprimirVenda/' + venda);
+		}
 
 		function buscarDadosImpressao(venda, crediario) {
 			return $http.get(configuracaoREST.url + configuracaoREST.venda + 'buscarDadosImpressao/' + venda + '/' + crediario);

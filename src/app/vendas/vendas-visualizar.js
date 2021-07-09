@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
 
 	'use strict';
 
@@ -49,7 +49,7 @@
 					pendente: response.data.data.datatables.pendente
 				};
 
-				$http.post('http://localhost/cupom/imprimir-recibo-parcela.php', dados);
+				$http.post('http://192.168.100.111/cupom/imprimir-recibo-parcela.php', dados);
 			}
 		}
 

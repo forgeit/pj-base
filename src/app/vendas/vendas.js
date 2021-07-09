@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
 
 	'use strict';
 
@@ -57,7 +57,7 @@
 
 				if (response.data.status == 'true') {
 
-					$http.post('http://localhost/cupom/index.php', vm.carrinho);
+					$http.post('http://192.168.100.111/cupom/index.php', vm.carrinho);
 
 					delete vm.carrinho;
 					vm.carrinho = [];

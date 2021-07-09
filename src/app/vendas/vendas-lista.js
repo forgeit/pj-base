@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
 
 	'use strict';
 
@@ -6,17 +6,33 @@
 	.module('app.produto')
 	.controller('VendasLista', VendasLista);
 
-	VendasLista.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'tabelaUtils', 'vendasRest', '$scope', '$timeout'];
+	VendasLista.$inject = ['controllerUtils', 'AuthToken', '$rootScope', 'jwtHelper', 'tabelaUtils', 'vendasRest', '$scope', '$timeout', '$http'];
 
-	function VendasLista(controllerUtils, AuthToken, $rootScope, jwtHelper, tabelaUtils, dataservice, $scope, $timeout) {
+	function VendasLista(controllerUtils, AuthToken, $rootScope, jwtHelper, tabelaUtils, dataservice, $scope, $timeout, $http) {
 		var vm = this;
 
 		var vm = this;
 		vm.tabela = {};
 		vm.instancia = {};
 		vm.irParaPagamento = irParaPagamento;
+		vm.imprimirCupom = imprimirCupom;
 
 		iniciar();
+
+		function imprimirCupom(id)  {
+			dataservice.reimprimirVenda(id).then(success).catch(error);
+
+			function error(response) {
+				console.log(response);
+				controllerUtils.feed(controllerUtils.messageType.ERROR, 'Erro ao reiprimir o cupom.');
+			}
+
+			function success(response) {
+		
+				$http.post('http://192.168.100.111/cupom/index.php', response.data.data.datatables);
+				
+			}
+		}
 
 		function irParaPagamento(venda, cliente) {
 			$('#modalVerVenda').modal('hide');

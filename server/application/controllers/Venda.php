@@ -20,6 +20,17 @@ class Venda extends MY_Controller {
 		}
 	}
 
+	public function buscarDadosHome() {
+		$lista = $this->VendaModel->buscarDadosHome();
+
+		print_r(json_encode(array('data' => $lista[0])));
+	}
+
+	public function reimprimirVenda() {
+		$lista = $this->VendaModel->reimprimirVenda($this->uri->segment(3));
+		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));
+	}
+
 	public function buscarContasPendentesCliente() {
 		$lista = $this->VendaModel->buscarContasPendentesCliente($this->uri->segment(3));
 		print_r(json_encode(array('data' => array ('datatables' => $lista ? $lista : array()))));

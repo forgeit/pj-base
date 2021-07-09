@@ -1,5 +1,127 @@
-<div class="text-center">
-	<h1>
-		Bem vindo ao sistema de vendas!
-	</h1>	
+<div class="row">
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.total_clientes"></h3>
+				<p>Total de Clientes</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.total_em_estoque"></h3>
+				<p>Total Produtos Cadastrados</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.total_itens_vendidos"></h3>
+				<p>Total Produtos Vendidos</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
 </div>
+
+<div class="row">
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.total_custo | currency"></h3>
+				<p>Custo Total</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.total_venda | currency"></h3>
+				<p>Valor a Receber</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="(vm.dados.total_venda - vm.dados.total_custo) | currency"></h3>
+				<p>Lucro</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.total_em_vendas | currency"></h3>
+				<p>Total em Vendas</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.total_vendas"></h3>
+				<p>Total Vendas</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-bag"></i>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.valor_para_receber | currency"></h3>
+				<p>Crediário: Aguardando Pagamento</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-3 col-xs-6">
+		<div class="small-box bg-primary">
+			<div class="inner">
+				<h3 ng-bind="vm.dados.valor_recebido | currency"></h3>
+				<p>Crediário: Valor Recebido</p>
+			</div>
+			<div class="icon">
+				<i class="ion ion-stats-bars"></i>
+			</div>
+		</div>
+	</div>
+</div>
+

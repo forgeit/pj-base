@@ -51,6 +51,7 @@
 					}
 
 					function success(response) {
+						console.log(response);
 						callback(controllerUtils.getData(response, 'datatables'));
 					}
 				}
